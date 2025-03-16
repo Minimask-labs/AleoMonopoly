@@ -1,6 +1,11 @@
 # AleoMonopoly
 The Aleo Monopoly Game is a blockchain-based game where players can buy buildings, roll dice, compete against opponents, and earn rewards. The game is designed to be fun, competitive, and rewarding, with a focus on privacy and decentralization
 
+# DEPLOYMENT LINK
+**Deployment Url:** https://testnet.aleo.info/program/aleo_monopoly_test003.aleo
+
+**Deployment ID:** at1qqjx9lwp6aylrrxkwke8rhh45egmjyyla0er368g5d0zl6ly95qs6e46an
+
 # Getting Started
 ### Step 1: Connect Wallet
 
