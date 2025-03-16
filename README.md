@@ -36,7 +36,7 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 # Stake-to-Earn Bonus:
 
-- Players who stake at least 5,000,000 tokens in the staking contract earn an additional 100 tokens per roll, regardless of the outcome.
+- Players who stake at least 5,000,000 [5 aleo] tokens minimum in the Betastaking. [Visit Website](https://testnet.betastaking.com/) contract earn an additional 100 tokens per roll, regardless of the outcome.
 
 # Competing Against Opponents
 ### Step 5: Request a Game
@@ -140,6 +140,98 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 **Sell:**
 
 - Sell buildings or NFTs in the marketplace for profit.
+
+# HOW CAN ALEO MONOPOLY ENHANCE PRIVACY USING ALEO 
+### Zero-Knowledge Proofs (ZKPs)
+**What It Does:**
+
+- Aleo uses zkSNARKs (Zero-Knowledge Succinct Non-Interactive Arguments of Knowledge) to enable private transactions and computations.
+
+- Players can prove they have met certain conditions (e.g., owning enough tokens to mint an NFT) without revealing their actual token balance or other sensitive data.
+
+**How It Enhances Privacy:**
+
+- Players can mint NFTs, roll dice, and compete in games without exposing their wallet balances or transaction history.
+
+- For example, when a player mints an NFT, they prove they have 12,000 tokens without revealing their exact balance.
+
+### Private State Transitions
+**What It Does:**
+
+- Aleo allows state transitions (e.g., updating player balances, minting NFTs) to be executed privately.
+
+- The game uses private records to store player data, such as token balances and building ownership.
+
+**How It Enhances Privacy:**
+
+- Player balances and ownership records are stored in encrypted form on the blockchain.
+
+- Only the player (or authorized parties) can decrypt and access their data.
+
+### Encrypted Transactions
+**What It Does:**
+
+- All transactions (e.g., buying buildings, paying rent, sending tokens) are encrypted using Aleo's privacy features.
+
+- The details of the transaction (e.g., sender, receiver, amount) are hidden from public view.
+
+**How It Enhances Privacy:**
+
+- Players can buy buildings, pay rent, and send tokens without revealing their wallet addresses or transaction amounts.
+
+- For example, when a player buys a building, the transaction is recorded on the blockchain, but the details are encrypted.
+
+### Private Gameplay
+**What It Does:**
+
+- Gameplay actions (e.g., rolling dice, competing in versus games) are executed privately using zkSNARKs.
+
+- Randomness for dice rolls is generated using the ChaCha random mechanism, which is verifiable but private.
+
+**How It Enhances Privacy:**
+
+- Players can roll dice and compete against opponents without revealing their strategies or outcomes.
+
+- For example, when a player rolls the dice, the result is computed privately, and only the outcome (win/lose) is revealed.
+
+### Private NFTs
+**What It Does:**
+
+- NFTs are minted and transferred privately using Aleo's privacy features.
+
+- Ownership of NFTs is stored in encrypted records.
+
+**How It Enhances Privacy:**
+
+- Players can mint, trade, and use NFTs without revealing their identity or wallet address.
+
+- For example, when a player mints an NFT, the transaction is recorded on the blockchain, but the details (e.g., player address, NFT metadata) are encrypted.
+
+### Private Versus Games
+**What It Does:**
+
+- Versus games are executed privately using zkSNARKs.
+
+- The game ID is generated using a hash of both players' addresses, ensuring privacy.
+
+**How It Enhances Privacy:**
+
+- Players can compete against each other without revealing their identities or strategies.
+
+- For example, when a player challenges an opponent, the game ID is computed privately, and only the outcome is revealed.
+
+### Private Marketplace (Future)
+**What It Does:**
+
+- The upcoming Minimask Lab Marketplace will use Aleo's privacy features to enable private buying and selling of NFTs.
+
+- Transactions will be encrypted, and ownership will be stored in private records.
+
+**How It Enhances Privacy:**
+
+- Players can buy and sell NFTs without revealing their identity or transaction details.
+
+- For example, when a player sells an NFT, the transaction is recorded on the blockchain, but the details (e.g., buyer, seller, price) are encrypted.
 
 # Why This Game is Fun and Engaging
 **Competitive:** Players can challenge friends and compete for rewards.
