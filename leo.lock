@@ -1,0 +1,13 @@
+[[package]]
+name = "credits.aleo"
+network = "testnet"
+location = "network"
+checksum = "e185a49fba7f5e477c3fedf8968be9912ae7d8db34531c246041e899175e4d33"
+dependencies = []
+
+[[package]]
+name = "staking_v1.aleo"
+network = "testnet"
+location = "network"
+checksum = "9fb809f1170b9ed2371e408545122323cef2d76b6c948081cb54519ae1f1ec77"
+dependencies = ["credits.aleo"]
