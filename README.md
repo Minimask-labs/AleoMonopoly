@@ -14,6 +14,26 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 - These tokens are used to buy buildings and participate in the game.
 
+**Leo Input Command** - `leo run issue aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h 10000u64`
+
+Output
+```
+ •  'aleo_monopoly_test03.aleo/issue' - 0 constraints (called 1 time)
+➡️  Outputs
+
+ • aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h
+ • 10000u64
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: issue,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    10000u64
+  ]
+}
+```
+  
+
 # Buying Buildings
 ### Step 3: Purchase a Building
 
@@ -22,6 +42,32 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 - Each building increases the player's chances of earning rewards when rolling the dice.
 
 - The price of buildings increases by 500 tokens for each subsequent purchase.
+
+**Leo Input Command** - `leo run monopoly_buy aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h 5000u64`
+
+Output
+```
+ •  'aleo_monopoly_test03.aleo/monopoly_buy' - 2,087 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h.private,
+  amount: 0u64.private,
+  buildings: 1u64.private,
+  _nonce: 2585017126032316317528177084561187600133551382803909557733036668531015355381group.public
+}
+ • 5000u64
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: monopoly_buy,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    5000u64,
+    1u64
+  ]
+}
+```
 
 # Rolling the Dice
 ### Step 4: Pay Rent (Roll Dice)
@@ -34,16 +80,59 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 - If they lose, they lose 150 tokens per building.
 
+Leo Input Command - `leo run monopoly_rent aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h 5000u64 1u64`
+
+Output 
+```
+ •  'aleo_monopoly_test03.aleo/monopoly_rent' - 2,020 constraints (called 1 time)
+
+➡️  Outputs
+
+ • {
+  owner: aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h.private,
+  amount: 5000u64.private,
+  buildings: 1u64.private,
+  _nonce: 4171132929524822510544142846068041976499748801483152603947543529708429829496group.public
+}
+ • 150u64
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: monopoly_rent,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    150u64
+  ]
+}
+```
+
 # Stake-to-Earn Bonus:
 
 - Players who stake at least 5,000,000 [5 aleo] tokens minimum in the Betastaking. [Visit Website](https://testnet.betastaking.com/) contract earn an additional 100 tokens per roll, regardless of the outcome.
 
-# Competing Against Opponents
+# Competing Against Opponent
 ### Step 5: Request a Game
 
 - Players can challenge another player using the play_request transition.
 
 - A unique game ID is generated using the hash of both players' addresses.
+
+**Leo Input Command** - `leo run play_request aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq`
+
+Output 
+```
+ •  'aleo_monopoly_test03.aleo/play_request' - 0 constraints (called 1 time)
+
+➡️  Output
+
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: play_request,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq
+  ]
+}
+```
 
 ### Step 6: Accept the Game
 
@@ -51,11 +140,47 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 - Both players set a goal (e.g., 400 tokens above their current balance).
 
+**Leo Input Command** - `leo run accept_request aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq`
+
+Output
+```
+ •  'aleo_monopoly_test03.aleo/accept_request' - 0 constraints (called 1 time)
+
+➡️  Output
+
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: accept_request,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq
+  ]
+}
+```
+
 ### Step 7: Check the Result
 
 - After playing, players use the check_request transition to determine the winner.
 
 - The first player to reach their goal wins 1,000 tokens.
+
+Leo Input Command - `leo run check_request  aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq`
+
+Output
+```
+ •  'aleo_monopoly_test03.aleo/check_request' - 0 constraints (called 1 time)
+
+➡️  Output
+
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: check_request,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq
+  ]
+}
+```
 
 # Minting NFTs
 ### Step 8: Mint an NFT
@@ -66,6 +191,26 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 - NFTs can be used to play mini-games in the future.
 
+**Leo Input Command** - `leo run mint_nft aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h 123456789u64 1928374738847388473field 1837738223u128`
+
+Output 
+```
+ •  'aleo_monopoly_test03.aleo/mint_nft' - 6 constraints (called 1 time)
+
+➡️  Output
+
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: mint_nft,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    123456789u64,
+    1928374738847388473field,
+    1837738223u128
+  ]
+}
+```
+
 # Selling Buildings
 ### Step 9: Sell a Building
 
@@ -73,12 +218,52 @@ The Aleo Monopoly Game is a blockchain-based game where players can buy building
 
 - The admin pays the player the building price minus a 1,000 token fee.
 
+**Leo Input Command** - `leo run monopoly_sale aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq`
+
+Output
+```
+ •  'aleo_monopoly_test03.aleo/monopoly_sale' - 0 constraints (called 1 time)
+
+➡️  Outputs
+
+ • aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h
+ • aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: monopoly_sale,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq
+  ]
+}
+```
+
 # Admin Functions
 ### Step 10: Send Tokens
 
 - The admin can send tokens to players using the send_token transition.
 
 - This is useful for rewarding players or distributing tokens for special events.
+
+**Leo Input Command** - `leo run send_token aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq 100u64`
+
+Output 
+```
+ •  'aleo_monopoly_test03.aleo/send_token' - 0 constraints (called 1 time)
+
+➡️  Outputs
+
+ • 100u64
+ • {
+  program_id: aleo_monopoly_test03.aleo,
+  function_name: send_token,
+  arguments: [
+    aleo1f5enhpxfz3l3pqyh8k9d5xkqu0njv27xp5sv4nedarrk3nrgnuzqm3pp9h,
+    aleo1fhwz4w7jg0sq0pd0xk5h0t5jf2taueaf8zdcflpjszc0mjrrtqyqchmjpq,
+    100u64
+  ]
+}
+```
 
 # How Users Would Understand the Game
 ### Objective:
