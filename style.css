@@ -1,0 +1,188 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Connect Button */
+.connect-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.connect-btn {
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.connect-btn:hover {
+    background-color: #1e88e5;
+}
+
+/* Dashboard */
+.dashboard {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card Styling */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-content {
+    margin-top: 15px;
+}
+
+.vote-section {
+    margin: 15px 0;
+}
+
+.vote-total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 18px;
+}
+
+.profit-icon {
+    color: #4CAF50; /* Green color for profit */
+    display: none; /* Hidden by default */
+}
+
+.cost {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.card-content .btn-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.card-content .buy-btn {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: none;
+}
+
+.card-content .buy-btn:first-child {
+    background: linear-gradient(135deg, #ff7b00, #ff3d00);
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 61, 0, 0.3);
+}
+
+.card-content .buy-btn:last-child {
+    background: linear-gradient(135deg, #0066ff, #0033ff);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 51, 255, 0.3);
+}
+
+.card-content .buy-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Footer Styles */
+.custom-footer {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Light border on top */
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* styles.css */
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px; /* Space between the heading and the dot */
+}
+
+.status-dot.active {
+    background-color: green; /* Green dot for active games */
+}
+
+.status-dot.inactive {
+    background-color: red; /* Red dot for inactive games */
+}
+
+.custom-footer p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.aleo-text {
+    color: #4CAF50; /* Green color for Aleo */
+    font-weight: bold;
+    text-transform: uppercase;
+}

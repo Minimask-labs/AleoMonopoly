@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALEO-MONOPOLY - Play 1st Monopoly game on ALEO</title>
+  <link rel="shortcut icon" href="../X Post.png" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    .card-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+}
+  </style>
+
+<style>
+  /* Cool Tooltip Styles */
+  .game-tooltip {
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+    cursor: help;
+  }
+  
+  .tooltip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .game-tooltip:hover .tooltip-icon {
+    transform: rotate(360deg);
+    background: linear-gradient(135deg, #a777e3, #6e8efb);
+  }
+  
+  .tooltip-content {
+    visibility: hidden;
+    width: 250px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    text-align: left;
+    padding: 15px;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .tooltip-content:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #16213e transparent transparent transparent;
+  }
+  
+  .game-tooltip:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .tooltip-content h3 {
+    margin-top: 0;
+    color: #4facfe;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 8px;
+  }
+  
+  .tooltip-content p {
+    margin: 10px 0;
+    line-height: 1.4;
+  }
+  
+  .tooltip-footer {
+    font-size: 0.8em;
+    text-align: center;
+    margin-top: 10px;
+    color: #4facfe;
+  }
+  
+  /* Individual button tooltips */
+  .header-bottom-actions-btn {
+    position: relative;
+  }
+  
+  .header-bottom-actions-btn:hover:after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    margin-bottom: 5px;
+  }
+</style>
+</head>
+
+<body>
+
+  <header class="header" data-header>
+    <div class="overlay" data-overlay></div>
+
+    <div class="header-bottom">
+      <div class="container">
+        <a href="#" class="logo">
+          <img src="./assets/minimask_post.png" height="100" style="border-radius: 2em;" alt="Homeverse logo">
+        </a>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="#" class="logo">
+              <img src="./assets/minimask_profile.png" style="border-radius: 10em; height: 50%; width: 50%;" alt="Homeverse logo">
+            </a>
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <div class="navbar-bottom">
+            <ul class="navbar-list">
+              <li>
+                <a href="#home" class="navbar-link" data-nav-link>Home</a>
+              </li>
+              <li>
+                <a href="#about" class="navbar-link" data-nav-link>About</a>
+              </li>
+              <li>
+                <a href="#service" class="navbar-link" data-nav-link>Play Game</a>
+              </li>
+              <li>
+                <a href="#nft" class="navbar-link" data-nav-link>NFT</a>
+              </li>
+              <li>
+                <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+              </li>
+              <li>
+                <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="header-bottom-actions">
+          <!-- Tooltip Container -->
+          <div class="game-tooltip">
+            <span class="tooltip-icon">?</span>
+            <div class="tooltip-content">
+              <h3>How The Game Works</h3>
+              <p>🎮 <strong>Play & Win</strong>: Complete challenges to earn rewards!</p>
+              <p>🏆 <strong>Notify</strong>: Get alerts when you win or new challenges appear</p>
+              <p>🎁 <strong>Claim</strong>: Collect your hard-earned rewards here</p>
+              <p>👤 <strong>Reveal Me</strong>: See your player profile and stats</p>
+              <p>💰 <strong>Connect</strong>: Link your wallet to play and receive prizes</p>
+              <div class="tooltip-footer">Happy gaming! 🚀</div>
+            </div>
+          </div>
+        
+          <button onclick="openModal(document.getElementById('modal_5'));" class="header-bottom-actions-btn" aria-label="Search" data-tooltip="Get notified about your wins!">
+            <ion-icon name="trophy-outline" id="trophy-icon" style="color: green;"></ion-icon>
+            <span>Notify</span>
+          </button>
+        
+          <button onclick="openModal(document.getElementById('modal_3'));" class="header-bottom-actions-btn" aria-label="Profile" data-tooltip="Claim your rewards here!">
+            <ion-icon name="ribbon-outline"></ion-icon>
+            <span>Claim</span>
+          </button>
+        
+          <button onclick="openModal(document.getElementById('modal_profile'));" class="header-bottom-actions-btn" aria-label="Cart" data-tooltip="View your player profile and stats">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>Reveal me</span>
+          </button>
+        
+          <button id="aleo_wallet" onclick="openModal(document.getElementById('modal_wallet'));" highlightStep(2)" 
+          data-tutorial-highlight="1" class="header-bottom-actions-btn" aria-label="Cart" data-tooltip="Connect your wallet to play and get prizes">
+            <ion-icon name="wallet-outline"></ion-icon>
+            <span>Connect</span>
+          </button>
+        
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
+        
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <section class="about" id="about">
+        <div class="container">
+          <figure class="about-banner">
+            <img src="./assets/images/animated6.gif" style="border-radius: 2em;" alt="House interior">
+          </figure>
+          <div class="about-content">
+            <p class="section-subtitle">Testnet3 Live</p>
+            <h2 class="h2 section-title"><strong>Roll up the dice man!</strong></h2>
+            <p class="about-text">
+              Discover, PLay the First Monopoly game on ALEO that enhances privacy among players. <strong>Click icon for more info</strong>
+            </p>
+            <ul class="about-list">
+              <li class="about-item">
+                <div class="about-item-icon" onclick="openModal(document.getElementById('modal_rent'));">
+                  <ion-icon name="home-outline"></ion-icon>
+                </div>
+                <p class="about-item-text">Gain/Lose Rent[rolling dice]</p>
+              </li>
+              <li class="about-item">
+                <div class="about-item-icon" onclick="openModal(document.getElementById('modal_stake'));">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <p class="about-item-text">Stake to earn</p>
+              </li>
+              <li class="about-item">
+                <div class="about-item-icon" onclick="openModal(document.getElementById('modal_tournament'));">
+                  <ion-icon name="game-controller-outline"></ion-icon>
+                </div>
+                <p class="about-item-text">Tournament Games</p>
+              </li>
+            </ul>
+            <p class="callout">
+              "Limited to x participant to claim testnet token. Challenge everyone to win this!"
+            </p>
+            <div class="feature-tooltip">
+              <button class="btn highlight-feature" id="mint_token" onclick="mint_token()" hhighlightStep(3)" 
+              data-tutorial-highlight="2" disabled>
+                <ion-icon name="diamond-outline"></ion-icon> Mint 10K MONO
+              </button>
+              <span class="tooltip-text">
+                <strong>Get Started!</strong><br>
+                Claim your initial 10,000 MONO tokens to begin playing. This is your starting capital!
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="modal_2" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Help Aleo-Monopoly??</h2></center>
+          <strong>Do you have credits?</strong>, go to <a href="https://discord.gg/G7e8NU4f">Faucet</a> and go to channel `testnet-faucet`, react and request faucet!<br>
+          <hr><p><b>Step 1: </b>Connect wallet and sign message</p>
+          <hr><p><b>Step 2: </b>Click `Mint 10k token` to get some token for the game playing</p>
+          <hr><p><b>Step 3: </b>Purchase a Building!</p>
+          <hr><p><b>Step 4: </b>Gain Rent, Lose Rent! by clicking `Get Rent` </p>
+          <hr><p><b>Step 6: </b>Sale of Building is now Live as user can sell at 10,000 token excluding rent rewards. To sale, unstake utilities is a must</p>
+          <hr><p><b>Step 8: </b>Staking your token enables you earn as this shield you 75% against rent loss... </p>
+          <hr><p><b>Step 9: </b>Dont feel scared to fail, its a game, but try to win luck of achieving 11000 token in total to claim reward! </p>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_rent" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Private Rent Roll</h2></center>
+          <ul>
+            <li>&bull; In a conventional Monopoly game, income balance is often public knowledge. Aleo Monopoly ensures privacy by utilizing zero-knowledge proofs.</li>
+            <li>&bull; Rent rolls are generated privately based on a random number (x). This randomization determines whether a player gains or loses rent income.</li>
+            <li>&bull; Player income balance records are also private, accessible only when a player shares their view key with another party.</li>
+          </ul>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_stake" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Stake to Earn</h2></center>
+          <ul>
+            <li>&bull; In Aleo-Monopoly, players can stake a specific amount of tokens by buying the utility security asset to mitigate potential losses in their rent rolls.</li>
+            <li>&bull; Staking provides a safety net, ensuring players still earn a percentage of income (75%) even if their dice roll results in a loss.</li>
+          </ul>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_bid" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Bid to Win</h2></center>
+          <ul>
+            <li>&bull; Players have the option to bid on super buildings using Aleo.</li>
+            <li>&bull; Bidding is done privately, and player identities remain concealed as Aleo player addresses are hashed. This ensures a high level of secrecy during the bidding process.</li>
+            <li>&bull; The First-come-First-Served Principle is implemented, allowing the first bidder to win unless outbid by another player.</li>
+          </ul>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_tournament" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Tournament Games</h2></center>
+          <ul>
+            <li>&bull; Aleo Monopoly introduces two types of tokens: test tokens and reward tokens. Both tokens hold no intrinsic value.</li>
+            <li>&bull; These tokens play a crucial role in tournament games, where specific criteria, such as a required number of test tokens and a target goal, must be met for entry.</li>
+            <li>&bull; Tournaments have a maximum number of players and a limited number of winners. Once the winners are determined, no additional winners can claim rewards.</li>
+            <li>&bull; Multiple tournaments can be organized based on Tournament IDs, each with its unique criteria. Importantly, player balances remain private within the context of the ongoing tournament.</li>
+          </ul>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_profile" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> My Profile</h2></center>
+          <p><b>Aleo Address: <b id="aleo_wallet2"></b</b></p>
+          <br />
+          <p><b>Balance: <b id="result2"></b></b></p>
+          <br />
+          <p><b>Building count: </b><b id="game_building"></b></p>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_1" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> Aleo-Monopoly Rebuild</h2></center><br/>
+          <p><b>Aleo-Monopoly</b> is a simple game on the Aleo Blockchain that uses leo programming to enhance privacy among players playing by rolling dice, owning building privately, stake token as utility to earn more/ shield against loss, bid super auction building!</p>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_3" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Homeverse logo"> Aleo-Monopoly Reward</h2></center>
+          <p><b>Aleo-Monopoly</b> is a simple game on the Aleo Blockchain!. If you have accumulate user token up to 11,000 Mono token and above, You'll be able to claim reward. <br><strong>================================== <br> N/B: Reward gotten will be not be exchanged for real money value but serves as identity in accomplishing task #1 in Aleo-Monopoly Testnet Phase I<br>==================================</strong></p>
+          <br>
+          <center><button class="btn" onclick="claim_reward()">Claim Reward</button></center>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_4" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> <small>CHALLENGE OPPONENT</small></h2></center>
+          <center><p><input type="text" id="aleo_opponent_start" class="form-control" placeholder="Aleo opponent address" /></p><br>
+          <button  onclick="versus_game_start()" class="section-subtitle" value="Challenge" />Challenge</button></center>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <div id="modal_5" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center>
+            <h2>
+              <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo">
+              <small>ACCEPT/CLAIM CHALLENGE</small>
+            </h2>
+          </center>
+          <center>
+            <div class="form-group">
+              <img src="./assets/images/service-3.png" height="100" style="border-radius: 2em;" alt="Monopoly logo"> 
+              <input type="text" id="opponent-address" placeholder="Enter your opponent address" class="form-control" disabled />
+            </div>
+            <br>
+            <button onclick="play_opponent();" class="btn btn-primary">Accept</button>
+            <button onclick="claim_check();" class="btn btn-secondary">Claim</button>
+          </center>
+          <br>
+          <strong>
+            <center><a href="#"><button>=== version 0.1.0 ===</button></a></center>
+          </strong>
+        </div>
+      </div>
+
+      <div id="modal_wallet" class="modal" aria-hidden="true" aria-modal="true" tabindex="-1">
+        <div class="modal_box">
+          <center><h2> <img src="./aleo1.jpg" height="50" style="border-radius: 2em;" alt="Monopoly logo"> <small>PICK A WALLET</small></h2></center><br />
+          <center>
+            <div style="display: flex; justify-content: space-between;">
+              <img src="./assets/images/demox_wallet.png" style="width: 30%;" onclick="aleo_connect1()" />
+              <!-- <img src="./assets/images/puzzle_wallet.png" style="width: 30%;" onclick="aleo_connect2();" />
+              <img src="./assets/images/avail.png" style="width: 30%;" onclick="aleo_connect2();" /> -->
+            </div>
+          </center>
+          <br>
+          <strong><center><a href="#"><button>=== version 0.1.0 ===</button></a></center></strong>
+        </div>
+      </div>
+
+      <section class="service" id="service" style="background-image: url('./assets/images/dice_roll.webp');">
+        <div class="container" >
+          <p class="section-subtitle">Your Home</p>
+          <h2 class="h2 section-title">Play Game[$<small id="result"></small>]</h2>
+          <ul class="service-list">
+            <li>
+              <div class="service-card">
+                <div class="card-badge green">Active !!</div>
+                <div class="card-icon">
+                  <img src="./assets/images/service-1.png" alt="Service icon">
+                </div>
+                <h3 class="h3 card-title">
+                  <b>Buy a home</b>
+                </h3>
+                <p class="card-text">
+                Buy a Building at 1000 token. can be purchase multiple times as prices increases!
+                </p>
+                <div class="feature-tooltip">
+                  <button onclick="purchase();" class="card-link" class="card-link" data-tutorial-highlight="3">
+                    <span>Purchase</span>
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </button>
+                  <span class="tooltip-text">
+                    <strong>Acquire Properties</strong><br>
+                    Buy buildings starting at 1000 MONO. Own more to increase your rental income potential!
+                  </span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="service-card">
+                <div class="card-badge green">Active !!</div>
+                <div class="card-icon">
+                  <img src="./assets/images/service-2.png" alt="Service icon">
+                </div>
+                <h3 class="h3 card-title">
+                  <b>Rent a home</b>
+                </h3>
+                <p class="card-text">
+                Head/Tail Rent at 200 token, try your luck!
+                </p>
+                <div class="feature-tooltip">
+                <button  onclick="rentOperation()" class="card-link" data-tutorial-highlight="4">
+                  <span>Rent</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+                <span class="tooltip-text">
+                  <strong>Gain/Loss Rent</strong><br>
+                  Rent to gain/loss 200 token for each head/tail respectively. chance is luck!
+                </span>
+              </div>
+              </div>
+            </li>
+            <li>
+              <div class="service-card">
+                <div class="card-badge green">Active !!</div>
+                <div class="card-icon">
+                  <img src="./assets/images/service-3.png" alt="Service icon">
+                </div>
+                <h3 class="h3 card-title">
+                  <b>Sell a home</b>
+                </h3>
+                <p class="card-text">
+                  To sale, you need at least owned 3 buildings or more, lets deal privately
+                </p>
+                <div class="feature-tooltip">
+                <button href="#" onclick="sale_mono()" class="card-link">
+                  <span>Sell</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+                <span class="tooltip-text">
+                  <strong>Sale Building</strong><br>
+                  Owned at least 3 buildings in the game before sale can be initialized
+                </span>
+              </div>
+              </div>
+            </li>
+            <li>
+              <div class="service-card">
+                <div class="card-badge green">Active !!</div>
+                <div class="card-icon">
+                  <img src="./assets/images/monopoly-challenge.png" style="width: 15em; height: 9em; border-radius: 2em;" alt="Service icon">
+                </div>
+                <h3 class="h3 card-title">
+                  <b>Versus Opponent</b>
+                </h3>
+                <p class="card-text">
+                  Challenge an opponent in the game of monopoly, whoever wins first gain reward!
+                </p>
+                <div class="feature-tooltip">
+                <button href="#" onclick="openModal(document.getElementById('modal_4'));" class="card-link">
+                  <span>Challenge</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+                <span class="tooltip-text">
+                  <strong>Opponent Challenge</strong><br>
+                  Challenge an opponent to gain more Mono token in the game, game reward for this is handled by the contract.
+                </span>
+              </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="map-section" id="nft">
+        <div class="container">
+          <h2 class="h2 section-title">World Map - Mint Countries as NFTs</h2>
+          <div class="row">
+            <div class="col-md-12">
+              <input type="text" id="countrySearch" class="form-control" placeholder="Search for a country...">
+              <button onclick="searchCountry()" class="btn btn-primary">Search</button>
+            </div>
+            <div class="col-md-12">
+              <div id="map" style="height: 600px;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="property" id="property">
+        <div class="container">
+          <p class="section-subtitle">
+            COMING SOON!!! (earn 10 token?)</p>
+          <h2 class="h2 section-title">Building Utilities</h2>
+          <ul class="features-list">
+            <li>
+              <a onclick="stake_earn();" class="features-card">
+                <div class="card-icon">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                </div>
+                <h3 class="card-title">Private Security</h3><small class="section-subtitle">stake >5 Aleo credit</small>
+                <div class="card-btn">
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="container">
+          <p class="section-subtitle">COMING SOON!!!(earn 5000 tokens)</p>
+          <h2 class="h2 section-title">Tournament Games</h2>
+          <ul class="property-list has-scrollbar">
+            <li>
+              <div class="property-card">
+                <figure class="card-banner">
+                  <a href="#">
+                    <img src="./assets/images/animated2.gif" alt="New Apartment Nice View" class="w-100">
+                  </a>
+                  <div class="card-badge orange">Upcoming Game!!!</div>
+                  <div class="banner-actions">
+                    <button class="banner-actions-btn">
+                      <ion-icon name="location"></ion-icon>
+                      <address>Shanghai, China</address>
+                    </button>
+                    <button class="banner-actions-btn">
+                      <ion-icon name="camera"></ion-icon>
+                      <span>4</span>
+                    </button>
+                    <button class="banner-actions-btn">
+                      <ion-icon name="game-controller-outline"></ion-icon>
+                      <span>2</span>
+                    </button>
+                  </div>
+                </figure>
+                <div class="card-content">
+                  <div class="card-price">
+                    <strong>$11,500 &bull; Reward: 5,000</strong>
+                  </div>
+                  <h3 class="h3 card-title">
+                    <a href="#">Tournament ID #1</a>
+                  </h3>
+                  <p class="card-text">
+                    Play tournament games to earn more against unlimited players globally. Number of winners are set in contract. Compete, Earn more aggresively to earn 5,000 extra income!!!
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="card-author">
+                    <figure class="author-avatar">
+                      <img src="./assets/images/author.jpg" alt="William Seklo" class="w-100">
+                    </figure>
+                    <div>
+                      <p class="author-name">
+                        <a href="#">aleo1az...ru7m</a>
+                      </p>
+                      <p class="author-title">Aleo admin</p>
+                    </div>
+                  </div>
+                  <div class="card-footer-actions">
+                    <button class="card-footer-actions-btn">
+                      <ion-icon name="resize-outline"></ion-icon>
+                    </button>
+                    <button class="card-footer-actions-btn" onclick="tournament_play()" id="test_play">
+                      <ion-icon name="game-controller-outline"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="blog" id="blog">
+        <div class="container">
+          <p class="section-subtitle">News & Blogs</p>
+          <h2 class="h2 section-title">Aleo NewsFeed</h2>
+          <ul class="blog-list has-scrollbar">
+            <li>
+              <div class="blog-card">
+                <figure class="card-banner">
+                  <img src="./assets/images/zPass_Hero.webp">
+                </figure>
+                <div class="blog-content">
+                  <div class="blog-content-top">
+                    <ul class="card-meta-list">
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="person"></ion-icon>
+                          <span>by: Admin</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="pricetags"></ion-icon>
+                          <span>subscribe</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <h3 class="h3 blog-title">
+                      <a href="#">Aleo: Introducing zPass</a>
+                    </h3>
+                  </div>
+                  <div class="blog-content-bottom">
+                    <div class="publish-date">
+                      <ion-icon name="calendar"></ion-icon>
+                      <time datetime="2023-23-10">OCTOBER 23, 2023</time>
+                    </div>
+                    <a href="https://aleo.org/post/introducing-zpass-aleos-pioneering-step-toward-privacy-preserving-digital/" class="read-more-btn">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="blog-card">
+                <figure class="card-banner">
+                  <img src="./assets/images/zk-cats-blog.webp">
+                </figure>
+                <div class="blog-content">
+                  <div class="blog-content-top">
+                    <ul class="card-meta-list">
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="person"></ion-icon>
+                          <span>by: Admin</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="pricetags"></ion-icon>
+                          <span>subscribe</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <h3 class="h3 blog-title">
+                      <a href="#">Aleo x Icebreaker: Get your zkCat NFT</a>
+                    </h3>
+                  </div>
+                  <div class="blog-content-bottom">
+                    <div class="publish-date">
+                      <ion-icon name="calendar"></ion-icon>
+                      <time datetime="2023-08-11">NOVEMBER 08, 2023</time>
+                    </div>
+                    <a href="https://aleo.org/post/aleo-icebreaker-get-your-zkcat-nft-zkhouse-devconnect-istanbul/" class="read-more-btn">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="blog-card">
+                <figure class="card-banner">
+                  <img src="./assets/images/aleo1.jpg"
+                    class="w-100">
+                </figure>
+                <div class="blog-content">
+                  <div class="blog-content-top">
+                    <ul class="card-meta-list">
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="person"></ion-icon>
+                          <span>by: Admin</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="card-meta-link">
+                          <ion-icon name="pricetags"></ion-icon>
+                          <span>subscribe</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <h3 class="h3 blog-title">
+                      <a href="#">What is Aleo?</a>
+                    </h3>
+                  </div>
+                  <div class="blog-content-bottom">
+                    <div class="publish-date">
+                      <ion-icon name="calendar"></ion-icon>
+                      <time datetime="2022-27-04">Apr 27, 2022</time>
+                    </div>
+                    <a href="#" class="read-more-btn">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="cta" id="contact">
+        <div class="container">
+          <div class="cta-card">
+            <div class="card-content">
+              <h2 class="h2 card-title">Are you a Leo developer?</h2>
+              <p class="card-text">Feel free to contribute to the Aleo-Monopoly project, new ideas are welcome...</p>
+            </div>
+            <button class="btn cta-btn">
+              <span>GITHUB</span>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer" id="about" style="background-image: url('./assets/minimask_cover.png'); ">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <img src="./assets/minimask_profile.png" width="50%" height="50%" style="border-radius: 3em;"  alt="Homeverse logo"> 
+          </a>
+          <p class="section-text">
+            Aleo-Monopoly is a simple gaming using the ALEO Blockchain technology. Players must roll a dice to win or lose rent privately, stake token to earn more, bid super auction building, meet the reward required to mint privately as well...
+          </p>
+          <ul class="contact-list">
+            <li>
+              <a href="mailto:aleo_monopoly@gmail.com" class="contact-link">
+                <ion-icon name="mail-outline"></ion-icon>
+              </a>
+            </li>
+          </ul>
+          <ul class="social-list">
+            <li>
+              <a href="https://discord.gg/MGCbSjKn" target="_blank" class="social-link">
+                <ion-icon name="logo-discord"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/aleomonopoly" target="_blank" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@Minimask-lap" target="_blank" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">ALEO-MONOPOLY</p>
+            </li>
+            <li>
+              <a onclick="openModal(document.getElementById('modal_1'));" class="footer-link">About</a>
+            </li>
+            <li>
+              <a onclick="openModal(document.getElementById('modal_2'));" class="footer-link">FAQ</a>
+            </li>
+            <li>
+              <a href="https://x.com/aleo_monopoly" class="footer-link">Twitter</a>
+            </li>
+            <li>
+              <a href="https://github.com/Minimask-lap" class="footer-link">Github</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2025 <a href="#">Minimask Lab</a>. All Rights Reserved
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="aleo_function.js"></script>
+  <script src="./assets/js/script.js"></script>
+  <script src="./leo-wallet-bundle.js"></script>
+  <script src="./transaction.js"></script>
+  <script src="./assets/js/fusilli.min.js"></script>
+  <script src="./assets/js/fusilli.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+
+    const countries = [
+      { name: "Afghanistan", coords: [33.93911, 67.709953], price: 11000, id: "14695981039346656037" },
+      // ... (all other country data remains the same)
+      { name: "Zimbabwe", coords: [-19.015438, 29.154857], price: 11000, id: "14695981039346656229" }
+    ];
+
+    countries.forEach(country => {
+      var marker = L.marker(country.coords).addTo(map);
+      marker.bindPopup(`
+        <strong>${country.name}</strong><br>
+        Price: ${country.price} MONO<br>
+        <strong>ID: ${country.id}</strong><br>
+        <button onclick="buyCountry('${country.name}', ${country.price}, '${country.id}')" class="btn btn-primary">Buy</button>
+      `);
+    });
+
+    function searchCountry() {
+      var countryName = document.getElementById('countrySearch').value;
+      var country = countries.find(c => c.name.toLowerCase() === countryName.toLowerCase());
+      if (country) {
+        map.setView(country.coords, 6);
+        L.marker(country.coords).addTo(map)
+          .bindPopup(`
+            <strong>${country.name}</strong><br>
+            Price: ${country.price} MONO<br>
+            <button onclick="buyCountry('${country.name}', ${country.price}, '${country.id}')" class="btn btn-primary">Buy</button>
+          `).openPopup();
+      } else {
+        alert("Country not found!");
+      }
+    }
+
+    function buyCountry(name, price, id) {
+      const unixTimestamp = Math.floor(Date.now() / 1000);
+      var publicKey = window.leoWallet.publicKey;
+      console.log(publicKey);
+      
+      if (!publicKey) {
+        throw new WalletNotConnectedError();
+      }
+
+      var inputs = [publicKey, `${id}u128` , `${unixTimestamp}u128`];
+      var aleoTransaction = Transaction.createTransaction(publicKey, 'testnetbeta', 'aleo_monopoly_minimask1.aleo', 'mint_nft', inputs, 100_000,);
+      
+      if (aleoTransaction) {
+        window.leoWallet.requestTransaction(aleoTransaction);
+        console.log('Transaction requested successfully.');
+      } else {
+        console.error('request Transaction function not available.');
+      }  
+
+      if (confirm(`Do you want to buy ${name} for ${price} MONO?`)) {
+        alert(`Congratulations! You have purchased ${id} for ${price} MONO.`);
+      }
+    }
+  </script>
+
+</body>
+</html>

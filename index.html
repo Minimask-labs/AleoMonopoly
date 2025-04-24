@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Cypto game - Shahid</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+</head>
+<body>
+
+    <!-- Connect Button -->
+        <div class="connect-button-container">
+            <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <img src="./X Post.png" width="250em" height="100em" style="border-radius: 2em;" /><h1>MiniMask Lab Gaming</h1>
+        <p>POINTS ACQUIRED: <span id="owned-cryptos">None</span></p>
+    </div>
+
+    <!-- Container for Cards -->
+    <div class="card-container">
+        <!-- Crypto Cards -->
+        <div class="card" data-crypto="Bitcoin" data-price="60000">
+            <img src="./slot.jpg">
+            <div class="card-content">
+                <h2>Slot Game <span class="status-dot inactive"></span></h2>
+                <div class="icons">
+                    <div class="icon-item"><i class="fas fa-chart-line"></i><span>Spin the reels and match symbols to win big!</span></div>
+                </div>
+                <br>
+                <div class="quantity">
+                    <strong><div class="amount">voted: 1</div></strong>
+                </div>
+                <div class="cost">Points per Play: 1</div>
+                <button class="buy-btn">PLAY</button>
+                <button class="buy-btn">VOTE</button>
+            </div>
+        </div>
+
+
+        <!-- Polkadot -->
+        <div class="card" data-crypto="Polkadot" data-price="35">
+            <img src="./bet.jpg">
+            <div class="card-content">
+                <h2>Bet Game <span class="status-dot inactive"></span></h2>
+                <div class="icons">
+                    <div class="icon-item"><i class="fas fa-chart-line"></i><span>Place your bet and guess the outcome! Simple, fast, and thrilling.</span></div>
+                </div>
+                <br>
+                <div class="quantity">
+                    <strong><div class="amount">voted: 1</div></strong>
+                </div>
+                <div class="cost">Points per Play: 2</div>
+                <button class="buy-btn">PLAY</button>
+                <button class="buy-btn">VOTE</button>
+            </div>
+        </div>
+        
+        <!-- Cardano -->
+        <div class="card" data-crypto="Cardano" data-price="2.5">
+            <img src="./dice.webp">
+            <div class="card-content">
+                <h2>Monopoly Game <span class="status-dot active"></span></h2>
+                <div class="icons">
+                    <div class="icon-item"><i class="fas fa-chart-line"></i><span>Roll the dice and bet on the outcome! A game of chance.</span></div>
+                </div>
+                <br>
+                <div class="quantity">
+                    <strong><div class="amount">voted: 1</div></strong>
+                </div>
+                <div class="cost">Points per Play: 1</div>
+                <a href="./aleomonopoly/index.html" target="_blank"><button class="buy-btn">PLAY</button></a>
+                <button class="buy-btn">VOTE</button>
+            </div>
+        </div>
+        
+        <!-- Binance Coin -->
+        <div class="card" data-crypto="Binance Coin" data-price="500">
+            <img src="./box.jpg">
+            <div class="card-content">
+                <h2>Move Game <span class="status-dot inactive"></span></h2>
+                <div class="icons">
+                    <div class="icon-item"><i class="fas fa-chart-line"></i><span>Make strategic moves to win! A game of skill and strategy.</span></div>
+                </div>
+                <br>
+                <div class="quantity">
+                    <strong><div class="amount">voted: 1</div></strong>
+                </div>
+                <div class="cost">Points per Play: 3</div>
+                <button class="buy-btn">PLAY</button>
+                <button class="buy-btn">VOTE</button>
+            </div>
+        </div>
+
+            <!-- Footer -->
+    <footer class="custom-footer">
+        <p>Powered By <span class="aleo-text">Aleo</span></p>
+        <p>© 2025 MiniMask Lab. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
